@@ -1,10 +1,12 @@
 def short_name(name):
-    if len(name) > 30:
+    if len(name) >= 30:
         name_words = name.split('-')
         name = ''
         for i in name_words:
             if i.lower() not in ["the","of","in","from","by","with","and", "or", "for", "to", "at", "a"]:
                 name += i[0]
+    elif '-' in name:
+        name = ' '.join(name.split('-'))
     return name.upper()
 
 def generate_bc(url, separator):
@@ -37,7 +39,7 @@ def generate_bc(url, separator):
         if link and (i == len(way_list) - 1):
             way += span[0] + short_name(way_list[i]) + span[1]
         else:
-            way += a[0] + way_point + a[1] + way_list[i].upper() + a[2]
+            way += a[0] + way_point + a[1] + short_name(way_list[i]) + a[2]
     return way
 
 a = [("mysite.com/pictures/holidays.html", " : "),
